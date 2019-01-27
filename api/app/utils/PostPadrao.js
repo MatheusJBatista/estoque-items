@@ -1,10 +1,11 @@
-module.exports = function (app,req,res,model) {
+module.exports = function (req,res,model) {
   const m = new model(req.body);
 
-  m.save((err)=>{
+  m.save((err, docs)=>{
     if (err) {
       res.json(err);
+      return;
     }
-    res.sendStatus(200);
+    res.json(docs).status(200);
   })
 }

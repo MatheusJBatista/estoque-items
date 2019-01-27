@@ -1,13 +1,17 @@
 const Produtos = require('../model/Produtos');
 const Categorias = require('../model/Categorias');
 const Marcas = require('../model/Marcas');
+const findById = require('../utils/FindById');
+const postPadrao = require('../utils/PostPadrao');
+const updatePadrao = require('../utils/UpdatePadrao');
+const deletePadrao = require('../utils/DeletePadrao');
 
-module.exports.get = function (app,req,res) {
+module.exports.get = function (req,res) {
   var query;
   if (req.query.method) {
     switch (req.query.method.toLowerCase()) {
       case 'findbyid':
-        require('../utils/FindById')(req.query.id, Produtos);
+        findById(req.query.id, Produtos);
         return;
 
         break;
@@ -32,14 +36,14 @@ module.exports.get = function (app,req,res) {
   }
 }
 
-module.exports.post = function (app,req,res) {
-  require('../utils/PostPadrao')(app,req,res,Produtos);
+module.exports.post = function (req,res) {
+  postPadrao(req,res,Produtos);
 }
 
-module.exports.put = function (app,req,res) {
-  require('../utils/UpdatePadrao')(app,req,res,Produtos);
+module.exports.put = function (req,res) {
+  updatePadrao(req,res,Produtos);
 }
 
-module.exports.delete = function (app,req,res) {
-  require('../utils/DeletePadrao')(app,req,res,Produtos);
+module.exports.delete = function (req,res) {
+  deletePadrao(req,res,Produtos);
 }

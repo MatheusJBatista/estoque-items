@@ -6,6 +6,7 @@ module.exports = function (res,id,model) {
   model.findById(id).exec((err,docs) => {
     if (err) {
       res.json(err);
+      return;
     }
     res.json(docs);
   })

@@ -1,12 +1,15 @@
 const Marcas = require('../model/Marcas');
+const findById = require('../utils/FindById');
+const postPadrao = require('../utils/PostPadrao');
+const updatePadrao = require('../utils/UpdatePadrao');
+const deletePadrao = require('../utils/DeletePadrao');
 
-module.exports.get = function (app,req,res) {
+module.exports.get = function (req,res) {
   var query;
   if (req.query.method) {
     switch (req.query.method.toLowerCase()) {
       case 'findbyid':
-
-        require('../utils/FindById')(res,req.query.id,Marcas);
+        findById(res,req.query.id,Marcas);
         return;
         break;
 
@@ -29,14 +32,14 @@ module.exports.get = function (app,req,res) {
   }
 }
 
-module.exports.post = function (app,req,res) {
-  require('../utils/PostPadrao')(app,req,res,Marcas);
+module.exports.post = function (req,res) {
+  postPadrao(req,res,Marcas);
 }
 
-module.exports.put = function (app,req,res) {
-  require('../utils/UpdatePadrao')(app,req,res,Marcas);
+module.exports.put = function (req,res) {
+  updatePadrao(req,res,Marcas);
 }
 
-module.exports.delete = function (app,req,res) {
-  require('../utils/DeletePadrao')(app,req,res,Marcas);
+module.exports.delete = function (req,res) {
+  deletePadrao(req,res,Marcas);
 }

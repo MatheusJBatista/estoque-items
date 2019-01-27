@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 var CategoriasSchema = new Schema({
   nome: {
     type: String,
-    required:true
+    required: 'nome da categoria é obrigatorio'
   },
   disponivel: {
     type: Boolean,
-    required:true
+    required: '\'disponivel\' é obrigatorio'
   },
   data_criacao: {
     type: Date,

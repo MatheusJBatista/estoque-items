@@ -5,19 +5,19 @@ const Schema = mongoose.Schema;
 var ProdutosSchema = new Schema({
   nome: {
     type: String,
-    required: true
+    required: 'Nome é obrigatorio'
   },
   descricao: {
     type: String,
-    required:true
+    required: 'Descrição é obrigatorio'
   },
   preco: {
     type: Number,
-    required:true
+    required: 'Preço é obrigatorio'
   },
   disponivel: {
     type: Boolean,
-    required:true
+    required: '\'Disponivel\' é obrigatorio'
   },
   url_foto: {
     type: String
@@ -32,12 +32,12 @@ var ProdutosSchema = new Schema({
   categoria: {
     type: Schema.Types.ObjectId,
     ref: 'Categorias',
-    required:true
+    required: 'Categoria é obrigatorio'
   },
   marca: {
     type: Schema.Types.ObjectId,
     ref: 'Marcas',
-    required:true
+    required: 'Marca é obrigatorio'
   }
 })
 

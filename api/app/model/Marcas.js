@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 var MarcasSchema = new Schema({
   nome: {
     type: String,
-    required: true
+    required: 'Nome da marca é obrigatorio'
   },
   logo_url: {
     type: String
