@@ -1,0 +1,29 @@
+body{
+  word-break: break-all;
+}
+
+div.openedNav {
+  margin-left: 250px;
+}
+
+div.toggleNav{
+  position: fixed;
+  z-index: 1;
+  opacity: .25;
+  transition: opacity 1s ease;
+}
+
+div.toggleNav img {
+  cursor: pointer;
+}
+
+div.toggleNav:hover {
+  opacity: 1;
+}
+
+.home {
+  /* background:url(./images/country-quilt-dark.png); */
+  /* background:url(./images/ep_naturalblack.png); */
+  background:url(./images/cork-wallet.png);
+  /* background-color: #7c7c7c; */
+}
