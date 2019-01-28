@@ -3,21 +3,18 @@ import './app.css';
 import './Components/sideBar.css';
 import SideBar from './Components/SideBar';
 import Home from './Components/Home';
+import NotFound from './Components/NotFound';
+import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      openedNav:false
+      openedNav:true
     }
 
     this.closeNav = this.closeNav.bind(this);
-  }
-
-  componentWillMount(){
-    this.setState(prevState => ({
-      openedNav: !prevState.openedNav
-    }))
+    this.mobile = this.mobile.bind(this);
   }
 
   closeNav(){
@@ -26,19 +23,34 @@ class App extends Component {
     }))
   }
 
+  mobile(){
+    this.setState({
+      openedNav:false
+    })
+  }
+
   render() {
     return (
-      <>
-        {this.state.openedNav ? <SideBar /> : '' }
-        <div className={this.state.openedNav ? 'openedNav' : ''}>
-          <div className="toggleNav">
-            <img src="http://www.marbleroomcle.com/wp-content/themes/marbleroomcle/images/menu-icon.png" width="50px" onClick={this.closeNav} alt="toggle sidebar"></img>
+      <Router>
+        <>
+          {this.state.openedNav ? <SideBar /> : '' }
+          <div className={this.state.openedNav ? 'openedNav' : ''}>
+            <div className="toggleNav">
+              <img src="http://www.marbleroomcle.com/wp-content/themes/marbleroomcle/images/menu-icon.png" width="50px" onClick={this.closeNav} alt="toggle sidebar"></img>
+            </div>
+            <div className="col-md-12 home">
+              <Switch>
+                <Route exact path="/" render={(props) => (
+                    <Home
+                      mobile = {this.mobile}
+                      />
+                  )} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
           </div>
-          <div className="col-md-12 home">
-            <Home/>
-          </div>
-        </div>
-      </>
+        </>
+      </Router>
     );
   }
 }

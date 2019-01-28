@@ -1,5 +1,6 @@
 body{
   word-break: break-all;
+  background:url(./images/cork-wallet.png);
 }
 
 div.openedNav {
@@ -24,6 +25,6 @@ div.toggleNav:hover {
 .home {
   /* background:url(./images/country-quilt-dark.png); */
   /* background:url(./images/ep_naturalblack.png); */
-  background:url(./images/cork-wallet.png);
+  /* background:url(./images/cork-wallet.png); */
   /* background-color: #7c7c7c; */
 }
