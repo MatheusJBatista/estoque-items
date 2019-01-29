@@ -5,9 +5,9 @@
   margin-bottom: 20px !important;
 }
 
-.flexItems {
+.flexItemsProduto {
   display: flex;
-  margin: 0px;
+  margin: 0;
 }
 
 .content {
@@ -18,10 +18,10 @@
   margin:0;
 }
 
-.flexItems h5 {
+.flexItemsProduto h5 {
   margin-bottom:0;
 }
-.flexItems p {
+.flexItemsProduto p {
   font-size: 1.1rem;
   margin-left: 5px;
 }
@@ -40,4 +40,14 @@
 
 .font p {
   font-size: 14px !important;
+}
+
+.produto a {
+  text-decoration: none;
+  color: #111;
+}
+
+.produto a:hover {
+  text-decoration: none;
+  color: #111;
 }
