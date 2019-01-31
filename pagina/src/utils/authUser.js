@@ -1,4 +1,8 @@
 export default {
   auth: false,
-  usuario: []
+  usuario: {
+    conta: {
+      admin: false
+    }
+  }
 }

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './app.css';
 import './Components/sideBar.css';
+import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+
 import SideBar from './Components/SideBar';
 import Home from './Components/Home';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
-import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import Logout from './Components/Logout';
 
 import API from './utils/API';
 import authUser from './utils/authUser';
@@ -23,13 +25,18 @@ class App extends Component {
   }
 
   componentWillMount(){
-    API.get('/usuario')
+    API.get('/usuario/login')
     .then(usuario => {
-      authUser.auth = true;
-      authUser.usuario = usuario.data;
-      this.setState({
-        usuario:true
-      })
+      if (usuario.data) {
+        authUser.auth = true;
+        authUser.usuario = usuario.data;
+        this.setState({
+          usuario:true
+        })
+      }
+    })
+    .catch(erro => {
+      console.log(erro);
     })
   }
 
@@ -67,8 +74,12 @@ class App extends Component {
                     <Home
                       mobile = {this.mobile}
                       />
+                  )}
+                />
+                <Route exact path='/logout' component={Logout} />
+                <Route exact path="/login" render={(props) => (
+                    <Login loged={authUser.auth}/>
                   )} />
-                <Route exact path="/login" component={Login} />
                 <Route component={NotFound} />
               </Switch>
             </div>

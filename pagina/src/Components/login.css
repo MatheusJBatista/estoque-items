@@ -1,0 +1,36 @@
+@font-face {
+  font-family: ChineseFont;
+  src: url('../font/MADEC___.TTF');
+}
+
+.logo {
+  font-family: ChineseFont;
+  justify-content:center;
+  display:flex;
+}
+
+.logo h1 {
+  font-size: 4rem;
+  margin-bottom: 0;
+}
+
+.flexLogin {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 15%
+}
+
+.flexLogin form {
+  width: 300px;
+}
+
+.flexLogin input {
+  margin-bottom: 3px;
+}
+
+.flexLogin span {
+  opacity: .50;
+  cursor: pointer;
+}

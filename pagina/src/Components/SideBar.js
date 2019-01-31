@@ -14,10 +14,10 @@ export default class SideBar extends Component {
     }
 
     this.setCategorias = this.setCategorias.bind(this);
+    this.gerarTextoFormatado = this.gerarTextoFormatado.bind(this);
   }
 
   componentWillMount(){
-    console.log(authUser);
     API.get('/categoria')
     .then(categorias => {
       this.setState({
@@ -36,6 +36,17 @@ export default class SideBar extends Component {
     )
   }
 
+  gerarTextoFormatado(texto, maximoCaracteres) {
+    this._textoFormatado = '';
+    for (let i = 0; i < texto.length && i <= maximoCaracteres; i++) {
+      this._textoFormatado += texto.charAt(i);
+    }
+    if (texto.length > this._textoFormatado.length) {
+      return this._textoFormatado + '...';
+    }
+    return this._textoFormatado;
+  }
+
   render(){
     return(
       <div className='sidebar'>
@@ -51,18 +62,25 @@ export default class SideBar extends Component {
               <div className="profileContent" style={{marginTop:'10px'}}>
                 <div className="flexItemsSideBar itemsProfileContent">
                   <h5>Nome: </h5>
-                  <p>{authUser.usuario[0].nome}</p>
+                  <p>{this.gerarTextoFormatado(authUser.usuario.nome, 16)}</p>
                 </div>
                 <div className="flexItemsSideBar itemsProfileContent">
                   <h5>Usuario: </h5>
-                  <p>{authUser.usuario[0].usuario}</p>
+                  <p>{this.gerarTextoFormatado(authUser.usuario.usuario,14)}</p>
                 </div>
                 <div className="flexItemsSideBar itemsProfileContent">
                   <h5>Conta: </h5>
-                  <p>{authUser.usuario[0].conta}</p>
+                  <p>{authUser.usuario.conta.nome}</p>
                 </div>
-                <div>
-                  <button className="btn btn-info">Configuração</button>
+                <div className="flexItemsSideBar">
+                  <div>
+                    <button className="btn btn-info">Configuração</button>
+                  </div>
+                  <div style={{marginLeft:'10px'}}>
+                    <Link to='/logout'>
+                      <button className="btn btn-danger">Logout</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </>
