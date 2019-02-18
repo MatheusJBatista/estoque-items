@@ -30,7 +30,8 @@ export default class SideBar extends Component {
     return(
       <Categoria
         key={categoria._id}
-        categoria={categoria}>
+        categoria={categoria}
+        produtos={this.props.produtos}>
         {categoria.nome}
       </Categoria>
     )

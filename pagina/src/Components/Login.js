@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import API from '../utils/API';
 import authUser from '../utils/authUser';
 
+import { setAuth, getAuth } from '../utils/localStorage';
+
 import './login.css';
 
 class Login extends Component {
@@ -97,6 +99,7 @@ class Login extends Component {
     })
     .then(usuario => {
       if (usuario.data[0]) {
+        setAuth();
         authUser.auth = true;
         authUser.usuario = usuario.data[0];
         this.setState({
@@ -131,13 +134,12 @@ class Login extends Component {
     }))
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.loged) {
+  UNSAFE_componentWillMount() {
+    if (getAuth()) {
       this.setState({
         redirect: true
       })
     }
-    return true
   }
 
   render(){

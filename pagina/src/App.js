@@ -8,16 +8,20 @@ import Home from './Components/Home';
 import Login from './Components/Login';
 import NotFound from './Components/NotFound';
 import Logout from './Components/Logout';
+import Auth from './Components/Auth';
 
-import API from './utils/API';
 import authUser from './utils/authUser';
+import { getAuth } from './utils/localStorage';
+import API from './utils/API';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       openedNav:true,
-      usuario: false
+      usuario: false,
+      redirectToAuth: false,
+      produtos: []
     }
 
     this.closeNav = this.closeNav.bind(this);
@@ -25,19 +29,19 @@ class App extends Component {
   }
 
   componentWillMount(){
-    API.get('/usuario/login')
-    .then(usuario => {
-      if (usuario.data) {
-        authUser.auth = true;
-        authUser.usuario = usuario.data;
+    
+    API.get('/produto')
+      .then(produtos => {
         this.setState({
-          usuario:true
+          produtos: produtos.data
         })
-      }
-    })
-    .catch(erro => {
-      console.log(erro);
-    })
+      })
+    
+    if (getAuth() && !authUser.auth) {
+      this.setState({
+        redirectToAuth: true
+      })
+    }
   }
 
   closeNav(){
@@ -53,16 +57,27 @@ class App extends Component {
   }
 
   render() {
+    // if (this.state.redirectToAuth) {
+    //   return (
+    //     <Router>
+    //       <Redirect to={{pathname:'/auth'}} />
+    //     </Router>
+    //   )
+    // }
     return (
       <Router>
         <>
-          {this.state.openedNav ? <SideBar /> : '' }
+          {/*Verificar por sessao antes de iniciar a pagina*/}
+          {this.state.redirectToAuth ? <Auth usuario={this.state.usuario} /> : <></>}
+          {this.state.openedNav ? <SideBar produtos={this.state.produtos}/> : '' }
+          {/*Caso a navbar não estiver ativa, vai ser colocado a menu de ação antes do container*/}
           {!this.state.openedNav ? (
             <div className="toggleNav">
               <img src="http://www.marbleroomcle.com/wp-content/themes/marbleroomcle/images/menu-icon.png" width="50px" onClick={this.closeNav} alt="toggle sidebar"></img>
             </div>
           ) : '' }
           <div className={this.state.openedNav ? 'openedNav' : 'container'}>
+            {/*O menu se repete aqui, porque se a navbar estiver fechada, não ira aparecer nada*/}
             {this.state.openedNav ? (
               <div className="toggleNav">
                 <img src="http://www.marbleroomcle.com/wp-content/themes/marbleroomcle/images/menu-icon.png" width="50px" onClick={this.closeNav} alt="toggle sidebar"></img>
@@ -72,14 +87,20 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" render={(props) => (
                     <Home
+                      produtos={this.state.produtos}
                       mobile = {this.mobile}
                       />
                   )}
                 />
-                <Route exact path='/logout' component={Logout} />
                 <Route exact path="/login" render={(props) => (
-                    <Login loged={authUser.auth}/>
-                  )} />
+                    <Login 
+                      loged={authUser.auth}
+                      />
+                  )} 
+                />
+
+                <Route exact path='/logout' component={Logout} />
+
                 <Route component={NotFound} />
               </Switch>
             </div>
