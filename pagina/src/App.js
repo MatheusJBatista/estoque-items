@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './app.css';
 import './Components/sideBar.css';
-import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route, BrowserRouter as Router, Switch, Link} from 'react-router-dom';
 
 import SideBar from './Components/SideBar';
 import Home from './Components/Home';
@@ -114,10 +114,13 @@ class App extends Component {
                 <Route exact path='/produto/:id' component={(props)=> {
                   let id = props.location.pathname.replace('/produto/', '');
                   return(
-                    <Home 
-                      produtos={this.state.produtos.filter(produto => produto._id === id)}
-                      mobile={this.mobile}
-                    />
+                    <>
+                      <Home 
+                        produtos={this.state.produtos.filter(produto => produto._id === id)}
+                        mobile={this.mobile}
+                      />
+                      <Link to='/'>Voltar</Link>
+                    </>
                   )
                 }} />
 
