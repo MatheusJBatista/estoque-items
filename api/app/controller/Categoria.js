@@ -1,8 +1,11 @@
 const Categorias = require('../model/Categorias');
+const Produtos = require('../model/Produtos');
+
 const findById = require('../utils/FindById');
 const postPadrao = require('../utils/PostPadrao');
 const updatePadrao = require('../utils/UpdatePadrao');
 const deletePadrao = require('../utils/DeletePadrao');
+
 
 module.exports.get = function (req,res) {
   var query;
@@ -40,5 +43,14 @@ module.exports.put = function (req,res) {
 }
 
 module.exports.delete = function (req,res) {
-  deletePadrao(req,res,Categorias);
+  Produtos.deleteMany({
+    categoria: req.params.id
+  }).exec(err => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+      return;
+    }
+    deletePadrao(req,res,Categorias);
+  })
 }

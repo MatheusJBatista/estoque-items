@@ -15,6 +15,8 @@ module.exports = function (app) {
       if (req.body._id) {
         delete req.body._id;
       }
+      console.log('ué ?');
+      
       next();
     }, CategoriaController.put)
     .delete((req,res,next) => {

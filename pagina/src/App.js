@@ -26,6 +26,7 @@ class App extends Component {
 
     this.closeNav = this.closeNav.bind(this);
     this.mobile = this.mobile.bind(this);
+    this.deleteProdutos = this.deleteProdutos.bind(this);
   }
 
   componentWillMount(){
@@ -36,8 +37,9 @@ class App extends Component {
           produtos: produtos.data
         })
       })
+      
     
-    if (getAuth() && !authUser.auth) {
+    if (getAuth() === 'true' && !authUser.auth) {
       this.setState({
         redirectToAuth: true
       })
@@ -56,6 +58,14 @@ class App extends Component {
     })
   }
 
+  deleteProdutos(produtos) {
+    produtos.map(produtoDelete => (
+      this.setState(prevState => ({
+        produtos: prevState.produtos.filter(produtoFiltro => produtoFiltro._id !== produtoDelete._id)
+      }))
+    ))
+  }
+
   render() {
     // if (this.state.redirectToAuth) {
     //   return (
@@ -69,7 +79,7 @@ class App extends Component {
         <>
           {/*Verificar por sessao antes de iniciar a pagina*/}
           {this.state.redirectToAuth ? <Auth usuario={this.state.usuario} /> : <></>}
-          {this.state.openedNav ? <SideBar produtos={this.state.produtos}/> : '' }
+          {this.state.openedNav ? <SideBar produtos={this.state.produtos} deleteProdutos = {this.deleteProdutos}/> : '' }
           {/*Caso a navbar não estiver ativa, vai ser colocado a menu de ação antes do container*/}
           {!this.state.openedNav ? (
             <div className="toggleNav">
@@ -100,6 +110,16 @@ class App extends Component {
                 />
 
                 <Route exact path='/logout' component={Logout} />
+
+                <Route exact path='/produto/:id' component={(props)=> {
+                  let id = props.location.pathname.replace('/produto/', '');
+                  return(
+                    <Home 
+                      produtos={this.state.produtos.filter(produto => produto._id === id)}
+                      mobile={this.mobile}
+                    />
+                  )
+                }} />
 
                 <Route component={NotFound} />
               </Switch>

@@ -135,7 +135,7 @@ class Login extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    if (getAuth()) {
+    if (getAuth() === 'true') {
       this.setState({
         redirect: true
       })

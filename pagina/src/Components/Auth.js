@@ -15,7 +15,7 @@ class Auth extends Component {
     }
 
     componentWillMount() {
-        if(getAuth()) {
+        if(getAuth() === 'true') {
             API.get('/usuario/login')
             .then(usuario => {
                 if (usuario.data) {

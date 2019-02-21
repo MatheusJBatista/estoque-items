@@ -39,19 +39,14 @@ class Categoria extends Component {
               </div>
           ) : ''}
         </div>
-        <button className="btn btn-primary" onClick={ () => this.setState({ modalInclusao:true }) }>Adicionar categoria</button>
         {this.state.modal ? (
           <AcoesCategoriaSidebar 
-            categoria={this.props.categoria}
-            produtos={this.props.produtos.filter(produto => produto.categoria._id === this.props.categoria._id)}
-            onCloseModal={ () => this.setState({ modal:false, modalInclusao:false })} 
-          />
-        ) : <></>}
-
-        {this.state.modalInclusao ? (
-          <AcoesCategoriaSidebar 
-            inclusao = {true}
-            onCloseModal={ () => this.setState({ modal:false, modalInclusao:false })} 
+            categoria = {this.props.categoria}
+            novosDados = {this.props.novosDados}
+            delete = {this.props.delete}
+            deleteProdutos = {this.props.deleteProdutos}
+            produtos = {this.props.produtos.filter(produto => produto.categoria._id === this.props.categoria._id)}
+            onCloseModal = { () => this.setState({ modal:false, modalInclusao:false })} 
           />
         ) : <></>}
       </div>

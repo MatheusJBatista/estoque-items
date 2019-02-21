@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import AcoesCategoriaSidebar from './AcoesCategoriaSidebar';
+import AcoesProdutoSidebar from "./AcoesProdutoSidebar";
+import { FaPlus } from 'react-icons/fa';
+
+
 import authUser from '../utils/authUser';
 import API from '../utils/API';
 import Categoria from './Categoria';
@@ -10,11 +15,16 @@ export default class SideBar extends Component {
   constructor(props){
     super(props);
     this.state = {
-      categorias: []
+      categorias: [],
+      modalInclusaoCategoria: false,
+      modalInclusaoProduto:false,
+      modalInclusaoMarca:false
     }
 
     this.setCategorias = this.setCategorias.bind(this);
     this.gerarTextoFormatado = this.gerarTextoFormatado.bind(this);
+    this.novosDados = this.novosDados.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   componentWillMount(){
@@ -26,12 +36,27 @@ export default class SideBar extends Component {
     })
   }
 
+  novosDados(dados) {
+    this.setState(prevState => ({
+      categorias: [...prevState.categorias, dados]
+    }))
+  }
+
+  delete(id){
+    this.setState(prevState => ({
+      categorias: prevState.categorias.filter(categoria => categoria._id !== id)
+    }))
+  }
+
   setCategorias(categoria, indice) {
     return(
       <Categoria
-        key={categoria._id}
-        categoria={categoria}
-        produtos={this.props.produtos}>
+        key = {categoria._id}
+        categoria = {categoria}
+        produtos = {this.props.produtos}
+        novosDados = {this.novosDados}
+        deleteProdutos = {this.props.deleteProdutos}
+        delete = {this.delete}>
         {categoria.nome}
       </Categoria>
     )
@@ -102,6 +127,33 @@ export default class SideBar extends Component {
         <div className="categoria">
           <h1>Categorias</h1>
           {this.state.categorias.map(this.setCategorias)}
+          <button className="btn btn-primary" onClick={ () => this.setState({ modalInclusaoCategoria:true }) } style={{marginRight:'10px'}}>
+            <span>
+              <FaPlus />
+            </span>
+            categoria
+          </button>
+          <button className="btn btn-primary" onClick={ () => this.setState({ modalInclusaoProduto: true }) }>
+            <span>
+              <FaPlus />
+            </span>
+            Produto
+          </button>
+          {this.state.modalInclusaoCategoria ? (
+            <AcoesCategoriaSidebar 
+              inclusao = {true}
+              novosDados = {this.novosDados}
+              onCloseModal={ () => this.setState({ modal:false, modalInclusaoCategoria:false })} 
+            />
+          ) : <></>}
+
+          {this.state.modalInclusaoProduto ? (
+            <AcoesProdutoSidebar
+              inclusao={true}
+              categorias= {this.state.categorias}
+              onCloseModal={ () => this.setState({ modalInclusaoProduto: false })}
+            />
+          ) : <></>}
         </div>
       </div>
     )
